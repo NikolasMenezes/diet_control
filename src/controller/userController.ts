@@ -15,9 +15,9 @@ export async function postUser(req: Request, res: Response) {
 
     userData['password'] = newPassword['hash']
 
-    const newUser = userModel.createUser(userData);
+    await userModel.createUser(userData);
 
-    return res.status(201).json(newUser);
+    return res.status(201).json([]);
   }
   catch (e: any) {
     return res.status(500).json({ 'error': e });
