@@ -1,4 +1,4 @@
-# API RESTful Diet control
+# Diet control RESTful API
 
 - Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui doloribus cupiditate dolorem delectus ipsam odio, voluptate et ab fugit blanditiis tempore laboriosam placeat. Aliquid illum voluptates quaerat iusto iure voluptatum!
 
