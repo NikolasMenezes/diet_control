@@ -6,80 +6,84 @@ import { User } from '../interfaces/iUsers';
 const userModel = new UserModel();
 const authService = new AuthService();
 
-export async function postUser(req: Request, res: Response) {
+class UserController {
+  async postUser(req: Request, res: Response) {
 
-  try {
-    const userData: User = req["body"];
+    try {
+      const userData: User = req["body"];
 
-    const newPassword = await authService.generateHashPassword(userData['password'])
+      const newPassword = await authService.generateHashPassword(userData['password'])
 
-    userData['password'] = newPassword['hash']
+      userData['password'] = newPassword['hash']
 
-    await userModel.createUser(userData);
+      await userModel.createUser(userData);
 
-    return res.status(201).json([]);
+      return res.status(201).json([]);
+    }
+    catch (e: any) {
+      return res.status(500).json({ 'error': e });
+    }
   }
-  catch (e: any) {
-    return res.status(500).json({ 'error': e });
+
+  async getUsers(req: Request, res: Response) {
+
+    try {
+      const users = await userModel.selectUsers();
+
+      return res.status(200).json(users);
+    }
+    catch (e: any) {
+      return res.status(500).json({ 'error': e });
+    }
+  }
+
+  async getUserById(req: Request, res: Response) {
+
+    try {
+      const id = req['params']['id']
+
+      const user = await userModel.selectUserById(id);
+
+      return res.status(200).json(user);
+    }
+    catch (e: any) {
+      return res.status(500).json({ 'error': e });
+    }
+  }
+
+  async putUser(req: Request, res: Response) {
+
+    try {
+      const id = req['params']['id']
+      const userData: User = req["body"];
+
+      const newPassword = await authService.generateHashPassword(userData['password'])
+
+      userData['password'] = newPassword['hash']
+
+      await userModel.updateUser(id, userData);
+
+      return res.status(200).json([]);
+    }
+    catch (e: any) {
+      return res.status(500).json({ 'error': e });
+    }
+
+  }
+
+  async deleteUser(req: Request, res: Response) {
+
+    try {
+      const id = req['params']['id']
+
+      await userModel.removeUser(id);
+
+      return res.status(200).json([]);
+    }
+    catch (e: any) {
+      return res.status(500).json({ 'error': e });
+    }
   }
 }
 
-export async function getUsers(req: Request, res: Response) {
-
-  try {
-    const users = await userModel.selectUsers();
-
-    return res.status(200).json(users);
-  }
-  catch (e: any) {
-    return res.status(500).json({ 'error': e });
-  }
-}
-
-export async function getUserById(req: Request, res: Response) {
-
-  try {
-    const id = req['params']['id']
-
-    const user = await userModel.selectUserById(id);
-
-    return res.status(200).json(user);
-  }
-  catch (e: any) {
-    return res.status(500).json({ 'error': e });
-  }
-}
-
-export async function putUser(req: Request, res: Response) {
-
-  try {
-    const id = req['params']['id']
-    const userData: User = req["body"];
-
-    const newPassword = await authService.generateHashPassword(userData['password'])
-
-    userData['password'] = newPassword['hash']
-
-    await userModel.updateUser(id, userData);
-
-    return res.status(200).json([]);
-  }
-  catch (e: any) {
-    return res.status(500).json({ 'error': e });
-  }
-
-}
-
-export async function deleteUser(req: Request, res: Response) {
-
-  try {
-    const id = req['params']['id']
-
-    await userModel.removeUser(id);
-
-    return res.status(200).json([]);
-  }
-  catch (e: any) {
-    return res.status(500).json({ 'error': e });
-  }
-}
+export const userController = new UserController() 

@@ -1,13 +1,13 @@
 import express from "express";
 import { userMiddleware } from './middleware/userMiddleware'
-import { postUser, getUsers, getUserById, putUser, deleteUser } from "./controller/userController";
+import { userController } from "./controller/userController";
 
 const router = express.Router()
 
-router.get('/user', getUsers)
-router.get('/user/:id', getUserById)
-router.post('/user', userMiddleware, postUser)
-router.put('/user/:id', userMiddleware, putUser)
-router.delete('/user/:id', deleteUser)
+router.get('/user', userController.getUsers)
+router.get('/user/:id', userController.getUserById)
+router.post('/user', userMiddleware, userController.postUser)
+router.put('/user/:id', userMiddleware, userController.putUser)
+router.delete('/user/:id', userController.deleteUser)
 
 export default router
