@@ -21,6 +21,9 @@ class UserController {
       return res.status(201).json([]);
     }
     catch (e: any) {
+      if (e['code'] === "ER_DUP_ENTRY") {
+        return res.status(400).json({ 'error': 'email already registred' })
+      }
       return res.status(500).json({ 'error': e });
     }
   }
