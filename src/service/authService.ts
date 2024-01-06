@@ -1,14 +1,13 @@
-import * as bcrypt from 'bcryptjs';
+import { genSalt, hash, compare } from 'bcryptjs'
 
 export default class AuthService {
-  async generateHashPassword(password: string): Promise<{ salt: string, hash: string }> {
-    const sal = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, sal);
-    return { salt: sal, hash };
+  async generateHashPassword(password: string): Promise<string> {
+    const sal = await genSalt(10);
+    const hashedPassword = await hash(password, sal);
+    return hashedPassword;
   }
 
-  async verifyPassword(password: string, sal: string, hash: string): Promise<boolean> {
-    const newHash = await bcrypt.hash(password, sal);
-    return newHash === hash;
+  async verifyPassword(password: string, hashPassword: string): Promise<boolean> {
+    return await compare(password, hashPassword)
   }
 }
