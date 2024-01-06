@@ -7,7 +7,7 @@ export default class AuthService {
     return hashedPassword;
   }
 
-  async verifyPassword(password: string, hashPassword: string): Promise<boolean> {
+  async verifyPassword(password: string, hashPassword: string ): Promise<boolean> {
     return await compare(password, hashPassword)
   }
 }
