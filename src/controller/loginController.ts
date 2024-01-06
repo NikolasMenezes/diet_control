@@ -29,8 +29,11 @@ class LoginController {
       }
 
       const token = await tokenService.generate(body, String(SECRET_KEY))
+      const tokenExpiration = new Date((new Date().getTime() + (24 * 60 * 60 * 1000))).getTime()
 
-      return res.status(200).json({ status: "success", token: token })
+      const response = { status: "success", token: token, expiresIn: tokenExpiration }
+
+      return res.status(200).json(response)
     } catch (e: any) {
       return res.status(500).json({ 'error': e })
     }
