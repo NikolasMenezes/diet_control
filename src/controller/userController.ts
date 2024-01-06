@@ -14,7 +14,7 @@ class UserController {
 
       const newPassword = await authService.generateHashPassword(userData['password'])
 
-      userData['password'] = newPassword['hash']
+      userData['password'] = newPassword
 
       await userModel.createUser(userData);
 
@@ -62,7 +62,7 @@ class UserController {
 
       const newPassword = await authService.generateHashPassword(userData['password'])
 
-      userData['password'] = newPassword['hash']
+      userData['password'] = newPassword
 
       await userModel.updateUser(id, userData);
 
