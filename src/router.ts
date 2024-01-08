@@ -1,8 +1,9 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import { userMiddleware } from './middleware/userMiddleware'
 import { userController } from "./controller/userController";
 import { basicsController } from "./controller/basicsController";
 import { loginController } from "./controller/loginController";
+import { jwtValidationMiddleware } from "./middleware/jwtValidatorMiddleware";
 
 const router = express.Router()
 

@@ -1,7 +1,7 @@
 import LoginModel from '../models/loginModel';
 import AuthService from '../service/authService';
 import TokenService from '../service/tokenService';
-import { Login } from '../interfaces/iLogin';
+import { Login } from '../types/login'
 import { Request, Response } from 'express';
 
 import { SECRET_KEY } from '../constants';
